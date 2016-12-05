@@ -10,6 +10,7 @@
 # Name:
 #
 
+from characters import *
 from visual import *
 import random
 import math
@@ -69,9 +70,10 @@ def main():
         which is the while True: loop that will
         be the universe's "time stream" :-)
     """
+    r2=R2D2(scale=1.5, pos=vector(0,0,0))
     power = 0
     # create an object named floor of class (type) box:
-    floor = box(pos=(0,-1,0), length=50, width=90, height = 0.5, color=color.white)
+    floor = box(pos=(0,-1,0), length=50, width=90, height = 0.5, color=color.white, material = materials.texture(data=materials.loadTGA("cloud_city"), mapping="top") )
 
     # this creates a list of walls 
     Walls = make_walls()
@@ -93,7 +95,7 @@ def main():
     stripes = b9, b10, b11, b12, b13, b14, b15
 
     p1score = label(pos=(0,10,10), text = "0")
-    p2score = lable(pos=(0,10,-10), text = "0")
+    p2score = label(pos=(0,10,-10), text = "0")
 
     #b3 = sphere( radius=1, pos=(0,0,0), color=(1,1,1), material=stripes_tex )
     
@@ -119,6 +121,7 @@ def main():
         prevpos[i] = balls[i].pos
     # this is the main loop of the program! it's "time" or the "event loop"
     while True:
+        robot=r2.build()
         rate(RATE)     # run no faster than RATE loops/second
 
         # +++++ start of all position updates: once per loop +++++ 

@@ -56,7 +56,7 @@ def main():
     
 
     # create an object named floor of class (type) box:
-    floor = box(pos=(0,-1,0), length=40, width=40, height = 0.5, color=color.white, material = materials.texture(data=materials.loadTGA("cloud_city"), mapping="top") )
+    floor = box(pos=(0,-1,0), length=40, width=40, height = 0.5, color=color.white, material = materials.texture(data=materials.loadTGA("cloud_city"), mapping="top"))
 
     # this creates a list of walls 
     Walls = make_walls()

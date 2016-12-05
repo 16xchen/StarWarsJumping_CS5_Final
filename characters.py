@@ -165,8 +165,8 @@ class BB8(Characters):
                 extrusion(pos=barcode_arc,shape=bar, frame=bb8, color=color.orange)
         
         #head strip
-        halo=shapes.trapezoid(width=0.5*scale, height=0.1*scale, top=0.1*scale)
-        halo_path=paths.arc(radius=1.35*scale, pos=(0,radius*1.35,0), angle2=-9*pi/24, angle1=33*pi/24)
+        halo=shapes.trapezoid(width=0.2*scale, height=0.07*scale, top=0.1*scale)
+        halo_path=paths.arc(radius=1.48*scale, pos=(0,radius*1.35,0), angle2=-9*pi/24, angle1=33*pi/24)
         extrusion(pos=halo_path, frame=bb8, shape=halo, color=color.orange)
 
 
@@ -177,6 +177,8 @@ class BB8(Characters):
             angle2=(i+0.9)*pi/7
             hat_path=paths.arc(radius=0.8*scale, pos=(0,radius*1.47,0), angle1=angle1, angle2=angle2)
             extrusion(pos=hat_path, frame=bb8, shape=hat, color=color.gray(0.5),material=materials.shiny)
+        
+
 
 
 
@@ -184,15 +186,15 @@ class BB8(Characters):
 
 
 def main():
-    #r2=R2D2(scale=3.0, pos=vector(10,10,0))
+    #r2=R2D2(scale=3.0, pos=vector(0,-5,0))
     bb8=BB8(scale=1)
 
-    sphere(radius=2, pos=(-5,5,0),color=color.green)        
+    #sphere(radius=2, pos=(-5,5,0),color=color.green)        
     robot=bb8.build()
 
     while True:  # time loop!
         rate(10)
 
 # This calls main when the file is run...
-if __name__ == "__main__":
-    main() 
+#if __name__ == "__main__":
+ #   main() 
