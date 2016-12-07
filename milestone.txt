@@ -1,0 +1,5 @@
+Team: Xingyao Chen, Tim Player, Makoto Nara
+
+We have chosen to do a Star Wars Themed Pool Game. The game is a pool game, and the objective of the game is to get all of the pool balls into the holes. There is an R2D2. 
+To play the game, run spherical_collisions.py. Press the down arrow to draw back the cue, press spacebar to release the cue. Press right and left arrows to angle the cue.
+

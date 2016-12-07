@@ -70,10 +70,14 @@ def main():
         which is the while True: loop that will
         be the universe's "time stream" :-)
     """
-    r2=R2D2(scale=1.5, pos=vector(0,0,0))
+    r2=R2D2(scale=1.5, pos=vector(50/2,0.5,90/2))
+    r3=R2D2(scale=1.5, pos=vector(-50/2,0.5,90/2))
+    r4=R2D2(scale=1.5, pos=vector(50/2,0.5,-90/2))
+    r5=R2D2(scale=1.5, pos=vector(-50/2,0.5,-90/2))
+
     power = 0
     # create an object named floor of class (type) box:
-    floor = box(pos=(0,-1,0), length=50, width=90, height = 0.5, color=color.white, material = materials.texture(data=materials.loadTGA("cloud_city"), mapping="top") )
+    floor = box(pos=(0,-1,0), length=50, width=90, height = 0.5, color=color.white, material = materials.texture(data=materials.loadTGA("han"), mapping="top") )
 
     # this creates a list of walls 
     Walls = make_walls()
@@ -122,6 +126,7 @@ def main():
     # this is the main loop of the program! it's "time" or the "event loop"
     while True:
         robot=r2.build()
+
         rate(RATE)     # run no faster than RATE loops/second
 
         # +++++ start of all position updates: once per loop +++++ 

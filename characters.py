@@ -1,22 +1,34 @@
 
 from visual import *
 class Characters(object):
-    def __init__(self, Name, scale, pos=vector(0,0,0)):
+    def __init__(self, Name, scale, pos=vector(0,0,0), vel=vector(0,-1,0)):
         self.scale=scale
         self.pos=pos
         self.Name=Name
+        self.vel=vel
     
     def __repr__(self):
         return self.Name+" of size "+str(self.scale)+" at "+str(self.pos)
-    
 
-
+  
 
 class R2D2(Characters):
-    def __init__(self, scale=1.0, pos=vector(0,0,0), Name="R2D2"):
+    def __init__(self, scale=1.0, pos=vector(0,0,0), Name="R2D2", vel=vector(0,-1,0)):
         self.scale=scale
         self.pos=pos
         self.Name=Name
+        self.vel=vel
+
+    def fall(self, item, dt):
+        item.vel.y = item.vel.y - 9.8*dt
+        item.pos.y=item.pos.y+item.vel.y*dt
+
+
+    def jump(self, item, dt):
+        item.vel.y = abs(item.vel.y)
+        item.pos.y=item.pos.y+item.vel.y*dt
+
+        
 
     def build(self):
         scale=self.scale
@@ -184,17 +196,25 @@ class BB8(Characters):
 
 
 
-
 def main():
-    #r2=R2D2(scale=3.0, pos=vector(0,-5,0))
-    bb8=BB8(scale=1)
-
+    r2=R2D2(scale=1.0, pos=vector(0,3,0))
+    #bb8=BB8(scale=1)
     #sphere(radius=2, pos=(-5,5,0),color=color.green)        
-    robot=bb8.build()
-
+    robot=r2.build()
+    robot.vel=vector(0,1,0)
+    floor = box (pos=(0,0,0), length=10, height=0.5, width=10, color=color.red)
+    floor.vel=vector()
     while True:  # time loop!
-        rate(10)
+        rate(30)
+        dt=1.0/(1.0*30)
+        print(robot.pos)
+        r2.fall(robot, dt)
+        if robot.pos.y < floor.pos.y+floor.height/2:
+            r2.jump(robot, dt)
+        else:
+            r2.fall(robot,dt)
 
 # This calls main when the file is run...
-#if __name__ == "__main__":
- #   main() 
+if __name__ == "__main__":
+    main() 
+
