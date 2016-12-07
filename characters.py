@@ -1,5 +1,7 @@
 
 from visual import *
+from blocks import *
+
 class Characters(object):
     def __init__(self, Name, scale, pos=vector(0,0,0), vel=vector(0,-1,0)):
         self.scale=scale
@@ -206,6 +208,11 @@ def main():
     floor.vel=vector()
     while True:  # time loop!
         rate(30)
+        autocenter = True 
+        Blocks = make_blocks()
+        Blocks=randGeb(Blocks)
+        b1, b2, b3, b4, b5, b6, b7, b8, b9, b10 = Blocks #, b11, b12, b13, b14, b15, b16, b17, b18, b19, b20 = Blocks
+
         dt=1.0/(1.0*30)
         print(robot.pos)
         r2.fall(robot, dt)
@@ -213,6 +220,7 @@ def main():
             r2.jump(robot, dt)
         else:
             r2.fall(robot,dt)
+        
 
 # This calls main when the file is run...
 if __name__ == "__main__":

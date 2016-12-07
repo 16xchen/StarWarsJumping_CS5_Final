@@ -28,6 +28,12 @@ def make_blocks():
     return Blocks
 
 
+def randGeb(Blocks):
+    for i in range(len(Blocks)):
+        Blocks[i].pos = vector(random.randint(-25, 25), 15*(i-3), 0)
+        Blocks[i].vel = vector(0,0,0)
+    return Blocks
+
 def main():
     wall = box(pos=(0,0,-10), length=50, height=90, width = 0.5, color=color.white)
 
@@ -41,12 +47,8 @@ def main():
     speed_mult = 1
     newpos = (0,0,0)
     #initial positions and velocities
-    for i in range(len(Blocks)):
-        Blocks[i].pos = vector(random.randint(-25, 25), 15*(i-3), 0)
-        Blocks[i].vel = vector(0,0,0)
-
+    Blocks=randGeb(Blocks)
     poslist = []
-
     while True:
         rate(RATE)
         for b in Blocks:
@@ -70,6 +72,6 @@ def maxpos(L):
         if L[i].pos.y == max(maxlist): return i
 
 # This should be the FINAL thing in the file...
-if __name__ == "__main__":
-    main()  # did we just RUN this file?
+#if __name__ == "__main__":
+ #   main()  # did we just RUN this file?
                      # if so, we call main()
