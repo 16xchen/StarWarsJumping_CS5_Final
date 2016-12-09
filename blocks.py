@@ -75,6 +75,18 @@ def main():
                 for b in Blocks:
                     b.vel = vector(0,-20,0)
 
+def fellOnBlock(player, Blocks, poslist):
+    """returns whether or not the Characters object 'player' 
+    has fallen on one of the blocks within Blocks[] and that 
+    have heights in poslist[]"""
+    if player.vel.y > 0:
+        return False
+    else:
+        for index in range(len(poslist)):
+            if abs(player.pos.y - poslist[index]) < Blocks[index].height: 
+                if abs(player.pos.x - Blocks[index].pos.x) < 4 + Blocks[index].length / 2:
+                    return True
+    return False
 
 
 def minpos(L):
