@@ -1,13 +1,21 @@
 
 from visual import *
+
 from blocks import *
 
-def flame(r2d2, scale):
-    width=getWdith(r2d2)
-    flame=frame(pos=item.pos)
-    mid=cone(frame=flame,pos=(0,0,0),  axis=(0,-1.5*scale,0),radius=0.5, color=color.red, material=materials.blazed)
-    left=cone(frame=flame, pos=(width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red, material=materials.blazed)
-    right=cone(frame=flame, pos=(-width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red, material=materials.blazed)
+
+def getR2Width(r2d2, scale):
+    return scale*4
+
+def getBB8idth(BB8, scale):
+    return 8.0*scale
+
+def flame(r2d2, scale=1):
+    width=getR2Width(r2d2, scale)
+    flame=frame(pos=r2d2.pos)
+    mid=cone(frame=flame,pos=(0,0,0),  axis=(0,-2*scale,0),radius=0.8*scale, color=color.orange, material=materials.texture(data=materials.loadTGA("flames"), mapping="rectangular"))
+    left=cone(frame=flame, pos=(width/2.0,0,0),axis=(0,-2**scale,0), radius=0.8*scale, color=color.orange, material=materials.texture(data=materials.loadTGA("flames"), mapping="rectangular"))
+    right=cone(frame=flame, pos=(-width/2.0,0,0),axis=(0,-2*scale,0), radius=0.8*scale, color=color.orange, material=materials.texture(data=materials.loadTGA("flames"), mapping="rectangular"))
     return flame
         
 
@@ -167,16 +175,13 @@ def build_BB8(pos=vector(0,0,0), scale=1):
     #robot genitals
 
 
-def getR2Width(r2d2, scale):
-    return scale*4
-
-def getBB8idth(BB8, scale):
-    return 8.0*scale
-
 
 def main():
     #sphere(radius=2, pos=(-5,5,0),color=color.green)        
-    robot=build_BB8()
+    robot=build_R2D2()
+    i=0
+    fl=flame(robot)
+    fl.visible=False
     #floor = box (pos=(0,0,0), length=10, height=0.5, width=10, color=color.red)
     while True:  # time loop!
         rate(30)
@@ -184,4 +189,3 @@ def main():
 # This calls main when the file is run...
 if __name__ == "__main__":
     main() 
-
