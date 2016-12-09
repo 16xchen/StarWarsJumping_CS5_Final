@@ -5,9 +5,9 @@ from blocks import *
 def flame(r2d2, scale):
     width=getWdith(r2d2)
     flame=frame(pos=item.pos)
-    mid=cone(frame=flame,pos=(0,0,0),  axis=(0,-1.5*scale,0),radius=0.5, color=color.red)
-    left=cone(frame=flame, pos=(width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red)
-    right=cone(frame=flame, pos=(-width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red)
+    mid=cone(frame=flame,pos=(0,0,0),  axis=(0,-1.5*scale,0),radius=0.5, color=color.red, material=materials.blazed)
+    left=cone(frame=flame, pos=(width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red, material=materials.blazed)
+    right=cone(frame=flame, pos=(-width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red, material=materials.blazed)
     return flame
         
 
@@ -103,7 +103,7 @@ def build_BB8(pos=vector(0,0,0), scale=1):
     bb8= frame(pos=pos) 
     radius=4.0*scale
     offset=0.1*scale
-    sphere(radius=radius, material=materials.shiny)
+    sphere(radius=radius,material=materials.texture(data=materials.loadTGA("bb8_pattern"), mapping="cylinder"))
     circle = shapes.circle(radius=1.8*scale, angle1=0, angle2=pi) 
     rotation = paths.arc(radius=0.1*scale, angle2=2*pi,pos=(0,radius+0.3,0))
     extrusion(pos=rotation,shape=circle, frame=bb8, material=materials.shiny)
@@ -164,6 +164,7 @@ def build_BB8(pos=vector(0,0,0), scale=1):
         hat_path=paths.arc(radius=0.8*scale, pos=(0,radius*1.47,0), angle1=angle1, angle2=angle2)
         extrusion(pos=hat_path, frame=bb8, shape=hat, color=color.gray(0.5),material=materials.shiny)
         
+    #robot genitals
 
 
 def getR2Width(r2d2, scale):
@@ -174,10 +175,9 @@ def getBB8idth(BB8, scale):
 
 
 def main():
-    #bb8=BB8(scale=1)
     #sphere(radius=2, pos=(-5,5,0),color=color.green)        
-    robot=build_R2D2()
-    floor = box (pos=(0,0,0), length=10, height=0.5, width=10, color=color.red)
+    robot=build_BB8()
+    #floor = box (pos=(0,0,0), length=10, height=0.5, width=10, color=color.red)
     while True:  # time loop!
         rate(30)
     
