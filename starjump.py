@@ -22,12 +22,10 @@ def main():
 
     #if the user is in grutor mode, create a BB8. Otherwise, create an R2D2.
     if(isGrutor):
-        robot = BB8(scale=1.0, pos=vector(0,3,0))
+        player = build_BB8(scale=1.0, pos=vector(0,3,0))
     else:
-        robot = R2D2(scale=2.0, pos=vector(0,3,0))
+        player = build_R2D2(scale=2.0, pos=vector(0,3,0))
     
-    #build the robot! Build, build, the robot!
-    player = robot.build()
     player.vel=vector(0,0,0)
 
     #construct the game
@@ -41,7 +39,7 @@ def main():
     #initial positions and velocities
     for i in range(len(Blocks)):
         Blocks[i].pos = (random.randint(-25, 25), 15*(i-3), 0)
-        Blocks[i].vel = vector(0,-20,0)
+        Blocks[i].vel = vector(0,-30,0)
 
     print(type(Blocks[i].vel))
 
@@ -50,10 +48,14 @@ def main():
     print(dt)
     print(Blocks[i].vel*dt)
 
+    score = 0
 
         #physics loop
     while True:
         rate(RATE)
+
+        if player.pos.y < 50:
+            print("DEATH!!")
 
         #move the robot.
         player.pos = player.pos + player.vel 
@@ -74,9 +76,11 @@ def main():
 
 
         if(fellOnBlock(player, Blocks, poslist)):
+            score += 1
+            print(score)
             player.vel = vector(0, 1.5, 0)
             for b in Blocks:
-                b.vel = vector(0, -20, 0)
+                b.vel = vector(0, -30, 0)
 
         #USER INPUT FOR MOTION
         if scene.kb.keys:   # any keypress to be handled?
