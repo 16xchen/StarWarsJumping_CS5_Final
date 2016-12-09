@@ -15,22 +15,30 @@ class Characters(object):
   
 
 class R2D2(Characters):
-    def __init__(self, scale=1.0, pos=vector(0,0,0), Name="R2D2", vel=vector(0,-1,0)):
+    def __init__(self, scale=1.0, pos=vector(0,0,0), Name="R2D2", vel=vector(0,-10,0)):
         self.scale=scale
         self.pos=pos
         self.Name=Name
         self.vel=vel
+        self.width=4*scale
 
     def fall(self, item, dt):
         item.vel.y = item.vel.y - 9.8*dt
-        item.pos.y=item.pos.y+item.vel.y*dt
 
 
-    def jump(self, item, dt):
+    def jump(self, item):
         item.vel.y = abs(item.vel.y)
-        item.pos.y=item.pos.y+item.vel.y*dt
 
+    def flame(self, item):
+        width=self.width
+        scale=self.scale
+        flame=frame(pos=item.pos)
+        mid=cone(frame=flame,pos=(0,0,0),  axis=(0,-1.5*scale,0),radius=0.5, color=color.red)
+        left=cone(frame=flame, pos=(width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red)
+        right=cone(frame=flame, pos=(-width/2.0,0,0),axis=(0,-1.5*scale,0), radius=0.5*scale, color=color.red)
+        return flame
         
+
 
     def build(self):
         scale=self.scale
@@ -45,7 +53,7 @@ class R2D2(Characters):
         z=self.pos.z
 
         #basic body structure
-        midfoot=pyramid(frame=r2, size=size,axis=(0,1,0), material=materials.shiny)
+        midfoot=pyramid(frame=r2, size=size,axis=(0,1,0), material=materials.shiny, make_trail=True)
         leftfoot=pyramid(frame=r2, size=size, pos=(width/2.0,0,0),axis=(0,1,0), material=materials.shiny)
         rightfoot=pyramid(frame=r2, size=size, pos=(-width/2.0,0,0),axis=(0,1,0), material=materials.shiny)
         cylinder(frame=r2, axis=(0,height,0),radius=radius, color=color.white, pos=(0,size.y-2*offset,0), material=materials.shiny)
@@ -194,32 +202,35 @@ class BB8(Characters):
         
 
 
-
-
-
-
 def main():
     r2=R2D2(scale=1.0, pos=vector(0,3,0))
     #bb8=BB8(scale=1)
     #sphere(radius=2, pos=(-5,5,0),color=color.green)        
     robot=r2.build()
     robot.vel=vector(0,1,0)
+    fl=r2.flame(robot)
+    fl.vel=robot.vel
     floor = box (pos=(0,0,0), length=10, height=0.5, width=10, color=color.red)
     floor.vel=vector()
     while True:  # time loop!
         rate(30)
-        autocenter = True 
-        Blocks = make_blocks()
-        Blocks=randGeb(Blocks)
-        b1, b2, b3, b4, b5, b6, b7, b8, b9, b10 = Blocks #, b11, b12, b13, b14, b15, b16, b17, b18, b19, b20 = Blocks
-
         dt=1.0/(1.0*30)
+        fl.pos=robot.pos
+        robot.pos = robot.pos + robot.vel*dt    
+        fl.pos = fl.pos + fl.vel*dt    
+        autocenter = True 
         print(robot.pos)
         r2.fall(robot, dt)
         if robot.pos.y < floor.pos.y+floor.height/2:
-            r2.jump(robot, dt)
+            r2.jump(robot)
         else:
-            r2.fall(robot,dt)
+            r2.fall(robot, dt)
+        if scene.kb.keys:   # any keypress to be handled?
+            s = scene.kb.getkey()
+            print "You pressed the key", s
+            if s=='right':robot.vel=vector(10, 0,0)
+            if s=='left':robot.vel=vector(-10,0,0)
+        
         
 
 # This calls main when the file is run...
